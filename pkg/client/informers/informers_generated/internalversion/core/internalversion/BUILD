@@ -15,6 +15,7 @@ go_library(
         "endpoints.go",
         "event.go",
         "interface.go",
+        "jobquota.go",
         "limitrange.go",
         "namespace.go",
         "node.go",

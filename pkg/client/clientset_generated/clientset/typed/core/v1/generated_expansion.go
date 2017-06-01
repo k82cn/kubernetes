@@ -22,6 +22,8 @@ type ConfigMapExpansion interface{}
 
 type EndpointsExpansion interface{}
 
+type JobQuotaExpansion interface{}
+
 type LimitRangeExpansion interface{}
 
 type PersistentVolumeExpansion interface{}

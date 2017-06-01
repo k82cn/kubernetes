@@ -18,6 +18,7 @@ go_library(
         "event.go",
         "event_expansion.go",
         "generated_expansion.go",
+        "jobquota.go",
         "limitrange.go",
         "namespace.go",
         "namespace_expansion.go",

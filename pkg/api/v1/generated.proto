@@ -1262,6 +1262,37 @@ message ISCSIVolumeSource {
   optional LocalObjectReference secretRef = 10;
 }
 
+message JobQuota {
+  // Standard object's metadata.
+  // More info: http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#metadata
+  // +optional
+  optional k8s.io.apimachinery.pkg.apis.meta.v1.ObjectMeta metadata = 1;
+
+  optional JobQuotaSpec spec = 2;
+
+  optional JobQuotaStatus status = 3;
+}
+
+message JobQuotaList {
+  optional k8s.io.apimachinery.pkg.apis.meta.v1.ObjectMeta metadata = 1;
+
+  repeated JobQuota items = 2;
+}
+
+message JobQuotaSpec {
+  optional int32 partition = 1;
+
+  map<string, k8s.io.apimachinery.pkg.api.resource.Quantity> request = 2;
+}
+
+message JobQuotaStatus {
+  map<string, k8s.io.apimachinery.pkg.api.resource.Quantity> used = 1;
+
+  map<string, k8s.io.apimachinery.pkg.api.resource.Quantity> allocated = 2;
+
+  map<string, k8s.io.apimachinery.pkg.api.resource.Quantity> reclaiming = 3;
+}
+
 // Maps a string key to a path within a volume.
 message KeyToPath {
   // The key to project.

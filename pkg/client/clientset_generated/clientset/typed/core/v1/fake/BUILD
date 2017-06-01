@@ -17,6 +17,7 @@ go_library(
         "fake_endpoints.go",
         "fake_event.go",
         "fake_event_expansion.go",
+        "fake_jobquota.go",
         "fake_limitrange.go",
         "fake_namespace.go",
         "fake_namespace_expansion.go",

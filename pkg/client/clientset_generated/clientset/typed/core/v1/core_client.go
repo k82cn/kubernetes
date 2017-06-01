@@ -29,6 +29,7 @@ type CoreV1Interface interface {
 	ConfigMapsGetter
 	EndpointsGetter
 	EventsGetter
+	JobQuotasGetter
 	LimitRangesGetter
 	NamespacesGetter
 	NodesGetter
@@ -62,6 +63,10 @@ func (c *CoreV1Client) Endpoints(namespace string) EndpointsInterface {
 
 func (c *CoreV1Client) Events(namespace string) EventInterface {
 	return newEvents(c, namespace)
+}
+
+func (c *CoreV1Client) JobQuotas(namespace string) JobQuotaInterface {
+	return newJobQuotas(c, namespace)
 }
 
 func (c *CoreV1Client) LimitRanges(namespace string) LimitRangeInterface {

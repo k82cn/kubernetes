@@ -32,6 +32,8 @@ type Interface interface {
 	Endpoints() EndpointsInformer
 	// Events returns a EventInformer.
 	Events() EventInformer
+	// JobQuotas returns a JobQuotaInformer.
+	JobQuotas() JobQuotaInformer
 	// LimitRanges returns a LimitRangeInformer.
 	LimitRanges() LimitRangeInformer
 	// Namespaces returns a NamespaceInformer.
@@ -85,6 +87,11 @@ func (v *version) Endpoints() EndpointsInformer {
 // Events returns a EventInformer.
 func (v *version) Events() EventInformer {
 	return &eventInformer{factory: v.SharedInformerFactory}
+}
+
+// JobQuotas returns a JobQuotaInformer.
+func (v *version) JobQuotas() JobQuotaInformer {
+	return &jobQuotaInformer{factory: v.SharedInformerFactory}
 }
 
 // LimitRanges returns a LimitRangeInformer.

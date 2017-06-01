@@ -32,6 +32,8 @@ func RegisterDefaults(scheme *runtime.Scheme) error {
 	scheme.AddTypeDefaultingFunc(&ConfigMapList{}, func(obj interface{}) { SetObjectDefaults_ConfigMapList(obj.(*ConfigMapList)) })
 	scheme.AddTypeDefaultingFunc(&Endpoints{}, func(obj interface{}) { SetObjectDefaults_Endpoints(obj.(*Endpoints)) })
 	scheme.AddTypeDefaultingFunc(&EndpointsList{}, func(obj interface{}) { SetObjectDefaults_EndpointsList(obj.(*EndpointsList)) })
+	scheme.AddTypeDefaultingFunc(&JobQuota{}, func(obj interface{}) { SetObjectDefaults_JobQuota(obj.(*JobQuota)) })
+	scheme.AddTypeDefaultingFunc(&JobQuotaList{}, func(obj interface{}) { SetObjectDefaults_JobQuotaList(obj.(*JobQuotaList)) })
 	scheme.AddTypeDefaultingFunc(&LimitRange{}, func(obj interface{}) { SetObjectDefaults_LimitRange(obj.(*LimitRange)) })
 	scheme.AddTypeDefaultingFunc(&LimitRangeList{}, func(obj interface{}) { SetObjectDefaults_LimitRangeList(obj.(*LimitRangeList)) })
 	scheme.AddTypeDefaultingFunc(&Namespace{}, func(obj interface{}) { SetObjectDefaults_Namespace(obj.(*Namespace)) })
@@ -78,6 +80,20 @@ func SetObjectDefaults_EndpointsList(in *EndpointsList) {
 	for i := range in.Items {
 		a := &in.Items[i]
 		SetObjectDefaults_Endpoints(a)
+	}
+}
+
+func SetObjectDefaults_JobQuota(in *JobQuota) {
+	SetDefaults_ResourceList(&in.Spec.RequestUnit)
+	SetDefaults_ResourceList(&in.Status.Used)
+	SetDefaults_ResourceList(&in.Status.Allocated)
+	SetDefaults_ResourceList(&in.Status.Reclaiming)
+}
+
+func SetObjectDefaults_JobQuotaList(in *JobQuotaList) {
+	for i := range in.Items {
+		a := &in.Items[i]
+		SetObjectDefaults_JobQuota(a)
 	}
 }
 

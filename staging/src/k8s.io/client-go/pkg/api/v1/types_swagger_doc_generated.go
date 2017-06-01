@@ -678,6 +678,14 @@ func (ISCSIVolumeSource) SwaggerDoc() map[string]string {
 	return map_ISCSIVolumeSource
 }
 
+var map_JobQuota = map[string]string{
+	"metadata": "Standard object's metadata. More info: http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#metadata",
+}
+
+func (JobQuota) SwaggerDoc() map[string]string {
+	return map_JobQuota
+}
+
 var map_KeyToPath = map[string]string{
 	"":     "Maps a string key to a path within a volume.",
 	"key":  "The key to project.",

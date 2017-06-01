@@ -46,6 +46,14 @@ type EventListerExpansion interface{}
 // EventNamespaceLister.
 type EventNamespaceListerExpansion interface{}
 
+// JobQuotaListerExpansion allows custom methods to be added to
+// JobQuotaLister.
+type JobQuotaListerExpansion interface{}
+
+// JobQuotaNamespaceListerExpansion allows custom methods to be added to
+// JobQuotaNamespaceLister.
+type JobQuotaNamespaceListerExpansion interface{}
+
 // LimitRangeListerExpansion allows custom methods to be added to
 // LimitRangeLister.
 type LimitRangeListerExpansion interface{}

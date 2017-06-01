@@ -99,6 +99,8 @@ func (f *sharedInformerFactory) ForResource(resource schema.GroupVersionResource
 		return &genericInformer{resource: resource.GroupResource(), informer: f.Core().V1().Endpoints().Informer()}, nil
 	case api_v1.SchemeGroupVersion.WithResource("events"):
 		return &genericInformer{resource: resource.GroupResource(), informer: f.Core().V1().Events().Informer()}, nil
+	case api_v1.SchemeGroupVersion.WithResource("jobquotas"):
+		return &genericInformer{resource: resource.GroupResource(), informer: f.Core().V1().JobQuotas().Informer()}, nil
 	case api_v1.SchemeGroupVersion.WithResource("limitranges"):
 		return &genericInformer{resource: resource.GroupResource(), informer: f.Core().V1().LimitRanges().Informer()}, nil
 	case api_v1.SchemeGroupVersion.WithResource("namespaces"):

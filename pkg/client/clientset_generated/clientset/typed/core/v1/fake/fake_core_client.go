@@ -42,6 +42,10 @@ func (c *FakeCoreV1) Events(namespace string) v1.EventInterface {
 	return &FakeEvents{c, namespace}
 }
 
+func (c *FakeCoreV1) JobQuotas(namespace string) v1.JobQuotaInterface {
+	return &FakeJobQuotas{c, namespace}
+}
+
 func (c *FakeCoreV1) LimitRanges(namespace string) v1.LimitRangeInterface {
 	return &FakeLimitRanges{c, namespace}
 }
