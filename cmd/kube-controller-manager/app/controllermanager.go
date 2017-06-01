@@ -313,6 +313,7 @@ func NewControllerInitializers() map[string]InitFunc {
 	controllers["ttl"] = startTTLController
 	controllers["bootstrapsigner"] = startBootstrapSignerController
 	controllers["tokencleaner"] = startTokenCleanerController
+	controllers["allocation"] = startBatchjobController
 
 	return controllers
 }

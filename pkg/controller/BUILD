@@ -112,6 +112,7 @@ filegroup(
         "//pkg/controller/endpoint:all-srcs",
         "//pkg/controller/garbagecollector:all-srcs",
         "//pkg/controller/job:all-srcs",
+        "//pkg/controller/jobquota:all-srcs",
         "//pkg/controller/namespace:all-srcs",
         "//pkg/controller/node:all-srcs",
         "//pkg/controller/podautoscaler:all-srcs",
