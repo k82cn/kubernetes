@@ -345,6 +345,13 @@ func (f *FIFO) Resync() error {
 	return nil
 }
 
+func (f *FIFO) Len() int {
+	f.lock.Lock()
+	defer f.lock.Unlock()
+
+	return len(f.queue)
+}
+
 // NewFIFO returns a Store which can be used to queue up items to
 // process.
 func NewFIFO(keyFunc KeyFunc) *FIFO {

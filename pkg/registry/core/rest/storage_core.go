@@ -44,6 +44,7 @@ import (
 	"k8s.io/kubernetes/pkg/registry/core/endpoint"
 	endpointsstore "k8s.io/kubernetes/pkg/registry/core/endpoint/storage"
 	eventstore "k8s.io/kubernetes/pkg/registry/core/event/storage"
+	jobquotastore "k8s.io/kubernetes/pkg/registry/core/jobquota/storage"
 	limitrangestore "k8s.io/kubernetes/pkg/registry/core/limitrange/storage"
 	namespacestore "k8s.io/kubernetes/pkg/registry/core/namespace/storage"
 	nodestore "k8s.io/kubernetes/pkg/registry/core/node/storage"
@@ -119,6 +120,7 @@ func (c LegacyRESTStorageProvider) NewLegacyRESTStorage(restOptionsGetter generi
 	limitRangeStorage := limitrangestore.NewREST(restOptionsGetter)
 
 	resourceQuotaStorage, resourceQuotaStatusStorage := resourcequotastore.NewREST(restOptionsGetter)
+	batchjobStorage, batchjobStatusStorage := jobquotastore.NewREST(restOptionsGetter)
 	secretStorage := secretstore.NewREST(restOptionsGetter)
 	serviceAccountStorage := serviceaccountstore.NewREST(restOptionsGetter)
 	persistentVolumeStorage, persistentVolumeStatusStorage := pvstore.NewREST(restOptionsGetter)
@@ -210,6 +212,8 @@ func (c LegacyRESTStorageProvider) NewLegacyRESTStorage(restOptionsGetter generi
 		"limitRanges":                   limitRangeStorage,
 		"resourceQuotas":                resourceQuotaStorage,
 		"resourceQuotas/status":         resourceQuotaStatusStorage,
+		"batchjobs":                     batchjobStorage,
+		"batchjobs/status":              batchjobStatusStorage,
 		"namespaces":                    namespaceStorage,
 		"namespaces/status":             namespaceStatusStorage,
 		"namespaces/finalize":           namespaceFinalizeStorage,

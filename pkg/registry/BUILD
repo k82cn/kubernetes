@@ -49,6 +49,7 @@ filegroup(
         "//pkg/registry/core/configmap:all-srcs",
         "//pkg/registry/core/endpoint:all-srcs",
         "//pkg/registry/core/event:all-srcs",
+        "//pkg/registry/core/jobquota:all-srcs",
         "//pkg/registry/core/limitrange:all-srcs",
         "//pkg/registry/core/namespace:all-srcs",
         "//pkg/registry/core/node:all-srcs",

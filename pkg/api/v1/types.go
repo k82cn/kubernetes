@@ -4150,6 +4150,37 @@ type ResourceQuotaList struct {
 	Items []ResourceQuota `json:"items" protobuf:"bytes,2,rep,name=items"`
 }
 
+type JobQuotaStatus struct {
+	Used       ResourceList `json:"used,omitempty" protobuf:"bytes,1,rep,name=used,casttype=ResourceList,castkey=ResourceName"`
+	Allocated  ResourceList `json:"allocated,omitempty" protobuf:"bytes,2,rep,name=allocated,casttype=ResourceList,castkey=ResourceName"`
+	Reclaiming ResourceList `json:"reclaiming,omitempty" protobuf:"bytes,3,rep,name=reclaiming,casttype=ResourceList,castkey=ResourceName"`
+}
+
+type JobQuotaSpec struct {
+	Replicas    int32        `json:"replicas,omitempty" protobuf:"varint,1,opt,name=partition"`
+	RequestUnit ResourceList `json:"request,omitempty" protobuf:"bytes,2,rep,name=request,casttype=ResourceList,castkey=ResourceName"`
+}
+
+// +genclient=true
+
+type JobQuota struct {
+	metav1.TypeMeta `json:",inline"`
+	// Standard object's metadata.
+	// More info: http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#metadata
+	// +optional
+	metav1.ObjectMeta `json:"metadata,omitempty" protobuf:"bytes,1,opt,name=metadata"`
+
+	Spec   JobQuotaSpec   `json:"spec,omitempty" protobuf:"bytes,2,opt,name=spec"`
+	Status JobQuotaStatus `json:"status,omitempty" protobuf:"bytes,3,opt,name=status"`
+}
+
+type JobQuotaList struct {
+	metav1.TypeMeta   `json:",inline"`
+	metav1.ObjectMeta `json:"metadata,omitempty" protobuf:"bytes,1,opt,name=metadata"`
+
+	Items []JobQuota `json:"items" protobuf:"bytes,2,rep,name=items"`
+}
+
 // +genclient=true
 
 // Secret holds secret data of a certain type. The total bytes of the values in

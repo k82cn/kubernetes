@@ -23,6 +23,7 @@ package app
 import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/kubernetes/pkg/controller/disruption"
+	"k8s.io/kubernetes/pkg/controller/jobquota"
 )
 
 func startDisruptionController(ctx ControllerContext) (bool, error) {
@@ -38,5 +39,14 @@ func startDisruptionController(ctx ControllerContext) (bool, error) {
 		ctx.InformerFactory.Apps().V1beta1().StatefulSets(),
 		ctx.ClientBuilder.ClientOrDie("disruption-controller"),
 	).Run(ctx.Stop)
+	return true, nil
+}
+
+func startBatchjobController(ctx ControllerContext) (bool, error) {
+	go jobquota.NewJobQuotaController(&jobquota.JobQuotaControllerConfig{
+		KubeClient:     ctx.ClientBuilder.ClientGoClientOrDie("batchjob"),
+		StopEverything: ctx.Stop,
+	}).Run()
+
 	return true, nil
 }
