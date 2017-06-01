@@ -34,6 +34,7 @@ go_library(
         "//pkg/registry/core/endpoint:go_default_library",
         "//pkg/registry/core/endpoint/storage:go_default_library",
         "//pkg/registry/core/event/storage:go_default_library",
+        "//pkg/registry/core/jobquota/storage:go_default_library",
         "//pkg/registry/core/limitrange/storage:go_default_library",
         "//pkg/registry/core/namespace/storage:go_default_library",
         "//pkg/registry/core/node/storage:go_default_library",

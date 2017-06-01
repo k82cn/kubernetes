@@ -3597,6 +3597,37 @@ type ResourceQuotaList struct {
 	Items []ResourceQuota
 }
 
+type JobQuotaStatus struct {
+	Used       ResourceList
+	Allocated  ResourceList
+	Reclaiming ResourceList
+}
+
+type JobQuotaSpec struct {
+	Replicas    int32
+	RequestUnit ResourceList
+}
+
+// +genclient=true
+
+type JobQuota struct {
+	metav1.TypeMeta
+	// Standard object's metadata.
+	// More info: http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#metadata
+	// +optional
+	metav1.ObjectMeta
+
+	Spec   JobQuotaSpec
+	Status JobQuotaStatus
+}
+
+type JobQuotaList struct {
+	metav1.TypeMeta
+	metav1.ObjectMeta
+
+	Items []JobQuota
+}
+
 // +genclient=true
 
 // Secret holds secret data of a certain type.  The total bytes of the values in
