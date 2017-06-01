@@ -101,13 +101,49 @@ func NewJobController(podInformer coreinformers.PodInformer, jobInformer batchin
 	}
 
 	jobInformer.Informer().AddEventHandler(cache.ResourceEventHandlerFuncs{
-		AddFunc: jm.enqueueController,
+		AddFunc: func(obj interface{}) {
+			job := obj.(*batch.Job)
+			blockOwnerDeletion := false
+			isController := true
+			jq := &v1.JobQuota{
+				ObjectMeta: metav1.ObjectMeta{
+					Namespace: job.Namespace,
+					Name:      string(job.UID),
+					OwnerReferences: []metav1.OwnerReference{
+						{
+							APIVersion:         controllerKind.GroupVersion().String(),
+							Kind:               controllerKind.Kind,
+							Name:               job.Name,
+							UID:                job.UID,
+							BlockOwnerDeletion: &blockOwnerDeletion,
+							Controller:         &isController,
+						},
+					},
+				},
+				Spec: v1.JobQuotaSpec{
+					Replicas:    *job.Spec.Completions,
+					RequestUnit: getResourceRequest(&job.Spec.Template.Spec),
+				},
+			}
+			glog.Infof("Create job quota for job %v/%v", job.Namespace, job.Name)
+			if _, err := kubeClient.CoreV1().JobQuotas(job.Namespace).Create(jq); err != nil {
+				glog.Errorf("Failed to create job quota for job %v/%v: %v", job.Namespace, job.Name, err)
+			}
+
+			jm.enqueueController(obj)
+		},
 		UpdateFunc: func(old, cur interface{}) {
 			if job := cur.(*batch.Job); !IsJobFinished(job) {
 				jm.enqueueController(job)
 			}
 		},
-		DeleteFunc: jm.enqueueController,
+		DeleteFunc: func(obj interface{}) {
+			job := obj.(*batch.Job)
+			glog.Info("Delete job quota for job %v/%v", job.Namespace, job.Name)
+			kubeClient.CoreV1().JobQuotas(job.Namespace).Delete(string(job.UID), nil)
+
+			jm.enqueueController(obj)
+		},
 	})
 	jm.jobLister = jobInformer.Lister()
 	jm.jobStoreSynced = jobInformer.Informer().HasSynced
@@ -679,4 +715,22 @@ func (o byCreationTimestamp) Less(i, j int) bool {
 		return o[i].Name < o[j].Name
 	}
 	return o[i].CreationTimestamp.Before(o[j].CreationTimestamp)
+}
+
+func getResourceRequest(spec *v1.PodSpec) v1.ResourceList {
+	result := v1.ResourceList{}
+	for _, container := range spec.Containers {
+		for rName, rQuantity := range container.Resources.Requests {
+			if q, found := result[rName]; !found {
+				result[rName] = rQuantity
+				continue
+			} else {
+				qp := &q
+				qp.Add(rQuantity)
+				result[rName] = q
+			}
+		}
+	}
+
+	return result
 }

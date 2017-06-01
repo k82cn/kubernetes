@@ -8,6 +8,38 @@ load(
     "go_test",
 )
 
+go_test(
+    name = "go_default_test",
+    srcs = [
+        "controller_ref_manager_test.go",
+        "controller_utils_test.go",
+    ],
+    library = ":go_default_library",
+    tags = ["automanaged"],
+    deps = [
+        "//pkg/api:go_default_library",
+        "//pkg/api/testapi:go_default_library",
+        "//pkg/api/v1:go_default_library",
+        "//pkg/apis/extensions/v1beta1:go_default_library",
+        "//pkg/client/clientset_generated/clientset:go_default_library",
+        "//pkg/securitycontext:go_default_library",
+        "//vendor/k8s.io/apimachinery/pkg/api/equality:go_default_library",
+        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:go_default_library",
+        "//vendor/k8s.io/apimachinery/pkg/labels:go_default_library",
+        "//vendor/k8s.io/apimachinery/pkg/runtime:go_default_library",
+        "//vendor/k8s.io/apimachinery/pkg/runtime/schema:go_default_library",
+        "//vendor/k8s.io/apimachinery/pkg/types:go_default_library",
+        "//vendor/k8s.io/apimachinery/pkg/util/clock:go_default_library",
+        "//vendor/k8s.io/apimachinery/pkg/util/sets:go_default_library",
+        "//vendor/k8s.io/apimachinery/pkg/util/uuid:go_default_library",
+        "//vendor/k8s.io/client-go/pkg/apis/extensions/v1beta1:go_default_library",
+        "//vendor/k8s.io/client-go/rest:go_default_library",
+        "//vendor/k8s.io/client-go/tools/cache:go_default_library",
+        "//vendor/k8s.io/client-go/tools/record:go_default_library",
+        "//vendor/k8s.io/client-go/util/testing:go_default_library",
+    ],
+)
+
 go_library(
     name = "go_default_library",
     srcs = [
@@ -59,38 +91,6 @@ go_library(
     ],
 )
 
-go_test(
-    name = "go_default_test",
-    srcs = [
-        "controller_ref_manager_test.go",
-        "controller_utils_test.go",
-    ],
-    library = ":go_default_library",
-    tags = ["automanaged"],
-    deps = [
-        "//pkg/api:go_default_library",
-        "//pkg/api/testapi:go_default_library",
-        "//pkg/api/v1:go_default_library",
-        "//pkg/apis/extensions/v1beta1:go_default_library",
-        "//pkg/client/clientset_generated/clientset:go_default_library",
-        "//pkg/securitycontext:go_default_library",
-        "//vendor/k8s.io/apimachinery/pkg/api/equality:go_default_library",
-        "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:go_default_library",
-        "//vendor/k8s.io/apimachinery/pkg/labels:go_default_library",
-        "//vendor/k8s.io/apimachinery/pkg/runtime:go_default_library",
-        "//vendor/k8s.io/apimachinery/pkg/runtime/schema:go_default_library",
-        "//vendor/k8s.io/apimachinery/pkg/types:go_default_library",
-        "//vendor/k8s.io/apimachinery/pkg/util/clock:go_default_library",
-        "//vendor/k8s.io/apimachinery/pkg/util/sets:go_default_library",
-        "//vendor/k8s.io/apimachinery/pkg/util/uuid:go_default_library",
-        "//vendor/k8s.io/client-go/pkg/apis/extensions/v1beta1:go_default_library",
-        "//vendor/k8s.io/client-go/rest:go_default_library",
-        "//vendor/k8s.io/client-go/tools/cache:go_default_library",
-        "//vendor/k8s.io/client-go/tools/record:go_default_library",
-        "//vendor/k8s.io/client-go/util/testing:go_default_library",
-    ],
-)
-
 filegroup(
     name = "package-srcs",
     srcs = glob(["**"]),
@@ -112,6 +112,7 @@ filegroup(
         "//pkg/controller/endpoint:all-srcs",
         "//pkg/controller/garbagecollector:all-srcs",
         "//pkg/controller/job:all-srcs",
+        "//pkg/controller/jobquota:all-srcs",
         "//pkg/controller/namespace:all-srcs",
         "//pkg/controller/node:all-srcs",
         "//pkg/controller/podautoscaler:all-srcs",

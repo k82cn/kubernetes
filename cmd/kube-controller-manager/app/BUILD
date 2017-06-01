@@ -8,6 +8,14 @@ load(
     "go_test",
 )
 
+go_test(
+    name = "go_default_test",
+    srcs = ["controller_manager_test.go"],
+    library = ":go_default_library",
+    tags = ["automanaged"],
+    deps = ["//vendor/k8s.io/apimachinery/pkg/util/sets:go_default_library"],
+)
+
 go_library(
     name = "go_default_library",
     srcs = [
@@ -53,6 +61,7 @@ go_library(
         "//pkg/controller/garbagecollector:go_default_library",
         "//pkg/controller/garbagecollector/metaonly:go_default_library",
         "//pkg/controller/job:go_default_library",
+        "//pkg/controller/jobquota:go_default_library",
         "//pkg/controller/namespace:go_default_library",
         "//pkg/controller/node:go_default_library",
         "//pkg/controller/podautoscaler:go_default_library",
@@ -128,12 +137,4 @@ filegroup(
         "//cmd/kube-controller-manager/app/options:all-srcs",
     ],
     tags = ["automanaged"],
-)
-
-go_test(
-    name = "go_default_test",
-    srcs = ["controller_manager_test.go"],
-    library = ":go_default_library",
-    tags = ["automanaged"],
-    deps = ["//vendor/k8s.io/apimachinery/pkg/util/sets:go_default_library"],
 )
