@@ -386,6 +386,40 @@ func NodeSelectorRequirementsAsSelector(nsm []api.NodeSelectorRequirement) (labe
 	return selector, nil
 }
 
+// NodeSelectorRequirementsAsSelectorWithougValidation converts the []NodeSelectorRequirement api type into a struct that implements
+// labels.Selector; it will NOT validate the key & values in the Requirement to improve performance.
+func NodeSelectorRequirementsAsSelectorWithoutValidation(nsm []api.NodeSelectorRequirement) (labels.Selector, error) {
+	if len(nsm) == 0 {
+		return labels.Nothing(), nil
+	}
+	selector := labels.NewSelector()
+	for _, expr := range nsm {
+		var op selection.Operator
+		switch expr.Operator {
+		case api.NodeSelectorOpIn:
+			op = selection.In
+		case api.NodeSelectorOpNotIn:
+			op = selection.NotIn
+		case api.NodeSelectorOpExists:
+			op = selection.Exists
+		case api.NodeSelectorOpDoesNotExist:
+			op = selection.DoesNotExist
+		case api.NodeSelectorOpGt:
+			op = selection.GreaterThan
+		case api.NodeSelectorOpLt:
+			op = selection.LessThan
+		default:
+			return nil, fmt.Errorf("%q is not a valid node selector operator", expr.Operator)
+		}
+		r, err := labels.NewRequirementWithoutValidation(expr.Key, op, expr.Values)
+		if err != nil {
+			return nil, err
+		}
+		selector = selector.Add(*r)
+	}
+	return selector, nil
+}
+
 // GetTolerationsFromPodAnnotations gets the json serialized tolerations data from Pod.Annotations
 // and converts it to the []Toleration type in api.
 func GetTolerationsFromPodAnnotations(annotations map[string]string) ([]api.Toleration, error) {
