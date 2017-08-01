@@ -90,6 +90,27 @@ var Funcs = func(codecs runtimeserializer.CodecFactory) []interface{} {
 			if s.SchedulerName == "" {
 				s.SchedulerName = api.DefaultSchedulerName
 			}
+			if s.Affinity.PodAntiAffinity == nil {
+				s.Affinity.PodAntiAffinity = &api.PodAntiAffinity{
+					RequiredDuringSchedulingIgnoredDuringExecution: []api.PodAffinityTerm{
+						{NumOfMatchingPods: c.Uint32()},
+					},
+				}
+			}
+			if s.Affinity.PodAntiAffinity != nil {
+				for i := range s.Affinity.PodAntiAffinity.RequiredDuringSchedulingIgnoredDuringExecution {
+					term := &s.Affinity.PodAntiAffinity.RequiredDuringSchedulingIgnoredDuringExecution[i]
+					if term.NumOfMatchingPods == 0 {
+						term.NumOfMatchingPods = 1
+					}
+				}
+			}
+			if s.Affinity.PodAffinity != nil {
+				for i := range s.Affinity.PodAffinity.RequiredDuringSchedulingIgnoredDuringExecution {
+					term := &s.Affinity.PodAffinity.RequiredDuringSchedulingIgnoredDuringExecution[i]
+					term.NumOfMatchingPods = 1
+				}
+			}
 		},
 		func(j *api.PodPhase, c fuzz.Continue) {
 			statuses := []api.PodPhase{api.PodPending, api.PodRunning, api.PodFailed, api.PodUnknown}
