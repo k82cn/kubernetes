@@ -167,6 +167,9 @@ func SetObjectDefaults_Job(in *v1.Job) {
 			}
 		}
 	}
+	if in.Spec.Template.Spec.Affinity != nil {
+		api_v1.SetDefaults_Affinity(in.Spec.Template.Spec.Affinity)
+	}
 }
 
 func SetObjectDefaults_JobList(in *v1.JobList) {

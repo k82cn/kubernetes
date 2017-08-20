@@ -300,6 +300,9 @@ func SetObjectDefaults_Pod(in *v1.Pod) {
 			}
 		}
 	}
+	if in.Spec.Affinity != nil {
+		SetDefaults_Affinity(in.Spec.Affinity)
+	}
 }
 
 func SetObjectDefaults_PodAttachOptions(in *v1.PodAttachOptions) {
@@ -448,6 +451,9 @@ func SetObjectDefaults_PodTemplate(in *v1.PodTemplate) {
 			}
 		}
 	}
+	if in.Template.Spec.Affinity != nil {
+		SetDefaults_Affinity(in.Template.Spec.Affinity)
+	}
 }
 
 func SetObjectDefaults_PodTemplateList(in *v1.PodTemplateList) {
@@ -589,6 +595,9 @@ func SetObjectDefaults_ReplicationController(in *v1.ReplicationController) {
 					}
 				}
 			}
+		}
+		if in.Spec.Template.Spec.Affinity != nil {
+			SetDefaults_Affinity(in.Spec.Template.Spec.Affinity)
 		}
 	}
 }
