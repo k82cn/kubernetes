@@ -111,6 +111,7 @@ func autoConvert_v1alpha1_RuntimeClass_To_node_RuntimeClass(in *v1alpha1.Runtime
 func autoConvert_node_RuntimeClass_To_v1alpha1_RuntimeClass(in *node.RuntimeClass, out *v1alpha1.RuntimeClass, s conversion.Scope) error {
 	out.ObjectMeta = in.ObjectMeta
 	// WARNING: in.Handler requires manual conversion: does not exist in peer-type
+	// WARNING: in.Socket requires manual conversion: does not exist in peer-type
 	// WARNING: in.Overhead requires manual conversion: does not exist in peer-type
 	// WARNING: in.Scheduling requires manual conversion: does not exist in peer-type
 	return nil

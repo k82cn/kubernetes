@@ -41889,6 +41889,14 @@ func schema_k8sio_api_node_v1_RuntimeClass(ref common.ReferenceCallback) common.
 							Ref:         ref("k8s.io/api/node/v1.Scheduling"),
 						},
 					},
+					"socket": {
+						SchemaProps: spec.SchemaProps{
+							Description: "socket represents the socket of runtime manager.",
+							Default:     "",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
 				},
 				Required: []string{"handler"},
 			},
@@ -42294,6 +42302,14 @@ func schema_k8sio_api_node_v1beta1_RuntimeClass(ref common.ReferenceCallback) co
 						SchemaProps: spec.SchemaProps{
 							Description: "scheduling holds the scheduling constraints to ensure that pods running with this RuntimeClass are scheduled to nodes that support it. If scheduling is nil, this RuntimeClass is assumed to be supported by all nodes.",
 							Ref:         ref("k8s.io/api/node/v1beta1.Scheduling"),
+						},
+					},
+					"socket": {
+						SchemaProps: spec.SchemaProps{
+							Description: "socket represents the socket of runtime manager.",
+							Default:     "",
+							Type:        []string{"string"},
+							Format:      "",
 						},
 					},
 				},

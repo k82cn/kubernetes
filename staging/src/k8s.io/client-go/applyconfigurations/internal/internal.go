@@ -11266,6 +11266,10 @@ var schemaYAML = typed.YAMLObject(`types:
     - name: scheduling
       type:
         namedType: io.k8s.api.node.v1.Scheduling
+    - name: socket
+      type:
+        scalar: string
+      default: ""
 - name: io.k8s.api.node.v1.Scheduling
   map:
     fields:
@@ -11365,6 +11369,10 @@ var schemaYAML = typed.YAMLObject(`types:
     - name: scheduling
       type:
         namedType: io.k8s.api.node.v1beta1.Scheduling
+    - name: socket
+      type:
+        scalar: string
+      default: ""
 - name: io.k8s.api.node.v1beta1.Scheduling
   map:
     fields:

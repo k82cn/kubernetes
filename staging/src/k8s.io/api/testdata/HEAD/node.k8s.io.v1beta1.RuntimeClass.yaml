@@ -45,3 +45,4 @@ scheduling:
     operator: operatorValue
     tolerationSeconds: 5
     value: valueValue
+socket: socketValue

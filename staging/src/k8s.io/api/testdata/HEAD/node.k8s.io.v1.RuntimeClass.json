@@ -62,5 +62,6 @@
         "tolerationSeconds": 5
       }
     ]
-  }
+  },
+  "socket": "socketValue"
 }

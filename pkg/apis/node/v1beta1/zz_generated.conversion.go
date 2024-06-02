@@ -107,6 +107,7 @@ func autoConvert_v1beta1_RuntimeClass_To_node_RuntimeClass(in *v1beta1.RuntimeCl
 	out.Handler = in.Handler
 	out.Overhead = (*node.Overhead)(unsafe.Pointer(in.Overhead))
 	out.Scheduling = (*node.Scheduling)(unsafe.Pointer(in.Scheduling))
+	out.Socket = in.Socket
 	return nil
 }
 
@@ -118,6 +119,7 @@ func Convert_v1beta1_RuntimeClass_To_node_RuntimeClass(in *v1beta1.RuntimeClass,
 func autoConvert_node_RuntimeClass_To_v1beta1_RuntimeClass(in *node.RuntimeClass, out *v1beta1.RuntimeClass, s conversion.Scope) error {
 	out.ObjectMeta = in.ObjectMeta
 	out.Handler = in.Handler
+	out.Socket = in.Socket
 	out.Overhead = (*v1beta1.Overhead)(unsafe.Pointer(in.Overhead))
 	out.Scheduling = (*v1beta1.Scheduling)(unsafe.Pointer(in.Scheduling))
 	return nil
@@ -130,7 +132,17 @@ func Convert_node_RuntimeClass_To_v1beta1_RuntimeClass(in *node.RuntimeClass, ou
 
 func autoConvert_v1beta1_RuntimeClassList_To_node_RuntimeClassList(in *v1beta1.RuntimeClassList, out *node.RuntimeClassList, s conversion.Scope) error {
 	out.ListMeta = in.ListMeta
-	out.Items = *(*[]node.RuntimeClass)(unsafe.Pointer(&in.Items))
+	if in.Items != nil {
+		in, out := &in.Items, &out.Items
+		*out = make([]node.RuntimeClass, len(*in))
+		for i := range *in {
+			if err := Convert_v1beta1_RuntimeClass_To_node_RuntimeClass(&(*in)[i], &(*out)[i], s); err != nil {
+				return err
+			}
+		}
+	} else {
+		out.Items = nil
+	}
 	return nil
 }
 
@@ -141,7 +153,17 @@ func Convert_v1beta1_RuntimeClassList_To_node_RuntimeClassList(in *v1beta1.Runti
 
 func autoConvert_node_RuntimeClassList_To_v1beta1_RuntimeClassList(in *node.RuntimeClassList, out *v1beta1.RuntimeClassList, s conversion.Scope) error {
 	out.ListMeta = in.ListMeta
-	out.Items = *(*[]v1beta1.RuntimeClass)(unsafe.Pointer(&in.Items))
+	if in.Items != nil {
+		in, out := &in.Items, &out.Items
+		*out = make([]v1beta1.RuntimeClass, len(*in))
+		for i := range *in {
+			if err := Convert_node_RuntimeClass_To_v1beta1_RuntimeClass(&(*in)[i], &(*out)[i], s); err != nil {
+				return err
+			}
+		}
+	} else {
+		out.Items = nil
+	}
 	return nil
 }
 

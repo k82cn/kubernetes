@@ -35,6 +35,7 @@ type RuntimeClassApplyConfiguration struct {
 	Handler                          *string                       `json:"handler,omitempty"`
 	Overhead                         *OverheadApplyConfiguration   `json:"overhead,omitempty"`
 	Scheduling                       *SchedulingApplyConfiguration `json:"scheduling,omitempty"`
+	Socket                           *string                       `json:"socket,omitempty"`
 }
 
 // RuntimeClass constructs an declarative configuration of the RuntimeClass type for use with
@@ -261,5 +262,13 @@ func (b *RuntimeClassApplyConfiguration) WithOverhead(value *OverheadApplyConfig
 // If called multiple times, the Scheduling field is set to the value of the last call.
 func (b *RuntimeClassApplyConfiguration) WithScheduling(value *SchedulingApplyConfiguration) *RuntimeClassApplyConfiguration {
 	b.Scheduling = value
+	return b
+}
+
+// WithSocket sets the Socket field in the declarative configuration to the given value
+// and returns the receiver, so that objects can be built by chaining "With" function invocations.
+// If called multiple times, the Socket field is set to the value of the last call.
+func (b *RuntimeClassApplyConfiguration) WithSocket(value string) *RuntimeClassApplyConfiguration {
+	b.Socket = &value
 	return b
 }
