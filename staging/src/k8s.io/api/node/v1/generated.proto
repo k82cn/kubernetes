@@ -73,6 +73,10 @@ message RuntimeClass {
   // nodes.
   // +optional
   optional Scheduling scheduling = 4;
+
+  // socket represents the socket of runtime manager.
+  // +optional
+  optional string socket = 5;
 }
 
 // RuntimeClassList is a list of RuntimeClass objects.

@@ -64,6 +64,10 @@ type RuntimeClass struct {
 	// nodes.
 	// +optional
 	Scheduling *Scheduling `json:"scheduling,omitempty" protobuf:"bytes,4,opt,name=scheduling"`
+
+	// socket represents the socket of runtime manager.
+	// +optional
+	Socket string `json:"socket" protobuf:"bytes,5,opt,name=socket"`
 }
 
 // Overhead structure represents the resource overhead associated with running a pod.

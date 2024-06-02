@@ -48,6 +48,9 @@ type RuntimeClass struct {
 	// immutable.
 	Handler string
 
+	// Socket specifies the socket for runtime manage to use
+	Socket string
+
 	// overhead represents the resource overhead associated with running a pod for a
 	// given RuntimeClass. For more details, see
 	// https://git.k8s.io/enhancements/keps/sig-network/580-pod-readiness-gates
